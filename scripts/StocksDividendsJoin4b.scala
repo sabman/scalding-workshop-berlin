@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 /*
-  ./run.rb ./scripts/StocksDividendsJoin4.scala \
+  ./run.rb ./scripts/StocksDividendsJoin4b.scala \
     --stocks data/stocks/AAPL.csv \
     --dividends data/dividends/AAPL.csv \
     --output output/AAPL-stocks-dividends-join.txt
@@ -24,7 +24,7 @@ limitations under the License.
 import com.twitter.scalding._
 import workshop.Csv
 
-class StocksDividendsJoin4(args : Args) extends Job(args) {
+class StocksDividendsJoin4b(args : Args) extends Job(args) {
   val stockSchema =
     ('symd, 'price_open, 'price_high, 'price_low,
       'price_close, 'volume, 'price_adj_close)
@@ -38,7 +38,8 @@ class StocksDividendsJoin4(args : Args) extends Job(args) {
     .read
 
   stocksPipe
-    .joinWithTiny('symd -> 'dymd, dividendsPipe)
+    .filter('symd){ ymd: String => ymd.startsWith("1988")}
+    .joinWithSmaller('symd -> 'dymd, dividendsPipe)
     .project('symd, 'price_close, 'dividend)
     .write(Tsv(args("output")))
 }
