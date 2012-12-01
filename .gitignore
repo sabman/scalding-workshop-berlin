@@ -1,0 +1,8 @@
+*.class
+target
+output
+tmp
+api
+*.dot
+*.pdf
+*.DS_Store
