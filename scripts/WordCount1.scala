@@ -16,21 +16,14 @@ limitations under the License.
 
 import com.twitter.scalding._
 
-class WordCount(args : Args) extends Job(args) {
+class WordCount1(args : Args) extends Job(args) {
+  val tokenizerRegex = """\s+"""
+
   TextLine(args("input"))
     .read
     .flatMap('line -> 'word){
-      line : String => tokenize(line)
+      line : String => line.trim.toLowerCase.split(tokenizerRegex)
     }
     .groupBy('word){ group => group.size('count) }
     .write(Tsv(args("output")))
-
-  // Split a piece of text into individual words.
-  def tokenize(text : String) : Array[String] = {
-    // Lowercase each word and remove punctuation.
-    text
-      .toLowerCase
-      .replaceAll("[^a-zA-Z0-9\\s]", "")
-      .split("\\s+")
-  }
 }

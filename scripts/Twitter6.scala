@@ -42,7 +42,7 @@ class Twitter6(args : Args) extends Job(args) {
       .unique('language)
       .write(Tsv(args("uniques")))
 
-  new RichPipe(tweets)
-      .groupAll { _.count('tweet_id).reducers(2) }
-      .write(Tsv(args("count_star")))
+  // new RichPipe(tweets)
+  //     .groupAll { _.count('tweet_id).reducers(2) }
+  //     .write(Tsv(args("count_star")))
 }
