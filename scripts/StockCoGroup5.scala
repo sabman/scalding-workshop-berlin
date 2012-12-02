@@ -14,6 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+
+/*
+ * This exercise uses the CoGroup feature. CoGroups in Cascading are really the basis
+ * for joins, where two or more pipes are joined and grouped by join keys. Here we
+ * use it joining more than two pipes, since the join methods only support two-way
+ * joins.
+ * We'll join four stocks together by date, showing their closing price:
+ *   AAPL, INTC, GE, and IBM
+ * You invoke the script like this:
+
+ run.rb scripts/StockCoGroup5.scala \
+   --input  data/stocks \
+   --output output/AAPL-INTC-GE-IBM.txt
+
+ */
+
 import com.twitter.scalding._
 import cascading.tuple.Fields
 import cascading.tuple.Fields._
